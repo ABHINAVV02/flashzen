@@ -47,7 +47,7 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post('https://flashzenserver.onrender.com/api/auth/register', {
         username,
         email,
         password,

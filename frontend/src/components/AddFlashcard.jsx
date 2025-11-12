@@ -19,7 +19,7 @@ export default function AddFlashcard({ deckId, onFlashcardAdded }) {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.post(
-        'http://localhost:5000/api/flashcards',
+        'https://flashzenserver.onrender.com/api/flashcards',
         {
           deck: deckId,
           question: question.trim(),

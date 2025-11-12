@@ -15,7 +15,7 @@ export default function EditFlashcard({ flashcard, onUpdate, onCancel }) {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.put(
-        `http://localhost:5000/api/flashcards/${flashcard._id}`,
+        `https://flashzenserver.onrender.com/api/flashcards/${flashcard._id}`,
         { question, answer },
         { headers: { Authorization: `Bearer ${token}` } }
       );

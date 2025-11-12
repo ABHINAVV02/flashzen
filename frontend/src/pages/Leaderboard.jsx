@@ -13,7 +13,7 @@ export default function Leaderboard() {
     const fetchLeaderboard = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/auth/leaderboard', {
+        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/leaderboard', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setLeaderboard(res.data);

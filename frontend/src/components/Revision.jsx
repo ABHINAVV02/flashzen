@@ -62,7 +62,7 @@ export default function Revision({ flashcards }) {
     const fetchTimerSetting = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/auth/profile', {
+        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const timerDuration = res.data.settings?.timerDuration || 30;
@@ -122,7 +122,7 @@ export default function Revision({ flashcards }) {
     const fetchTimerSetting = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/auth/profile', {
+        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTimer(res.data.settings?.timerDuration || 30);
@@ -137,7 +137,7 @@ export default function Revision({ flashcards }) {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'http://localhost:5000/api/revision',
+        'https://flashzenserver.onrender.com/api/revision',
         {
           flashcardId: currentCard._id,
           deckId: currentCard.deck,

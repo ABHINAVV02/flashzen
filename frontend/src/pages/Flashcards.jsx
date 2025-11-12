@@ -20,7 +20,7 @@ export default function Flashcards() {
     const fetchDecks = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/decks', {
+        const res = await axios.get('https://flashzenserver.onrender.com/api/decks', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDecks(res.data);
@@ -42,7 +42,7 @@ export default function Flashcards() {
       try {
         const token = localStorage.getItem('token');
         const res = await axios.get(
-          `http://localhost:5000/api/flashcards/${selectedDeck}`,
+          `https://flashzenserver.onrender.com/api/flashcards/${selectedDeck}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

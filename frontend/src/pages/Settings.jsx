@@ -27,7 +27,7 @@ export default function Settings() {
     const fetchSettings = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/auth/profile', {
+        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSettings(res.data.settings || settings);
@@ -44,7 +44,7 @@ export default function Settings() {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        'http://localhost:5000/api/auth/settings',
+        'https://flashzenserver.onrender.com/api/auth/settings',
         { settings },
         { headers: { Authorization: `Bearer ${token}` } }
       );

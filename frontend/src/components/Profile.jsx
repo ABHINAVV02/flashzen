@@ -33,7 +33,7 @@ export default function Profile() {
     const fetchUserProfile = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/auth/profile', {
+        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
@@ -55,7 +55,7 @@ export default function Profile() {
     const fetchActivities = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/activity', {
+        const res = await axios.get('https://flashzenserver.onrender.com/api/activity', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setActivities(res.data);
@@ -71,7 +71,7 @@ export default function Profile() {
   const handleEditSubmit = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.put('http://localhost:5000/api/auth/profile', editForm, {
+      const res = await axios.put('https://flashzenserver.onrender.com/api/auth/profile', editForm, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data);
@@ -87,7 +87,7 @@ export default function Profile() {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post('http://localhost:5000/api/auth/delete-account', {}, {
+      const res = await axios.post('https://flashzenserver.onrender.com/api/auth/delete-account', {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDeleteMessage(res.data.message);

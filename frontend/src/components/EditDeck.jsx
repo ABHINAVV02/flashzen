@@ -15,7 +15,7 @@ export default function EditDeck({ deck, onUpdate, onCancel }) {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.put(
-        `http://localhost:5000/api/decks/${deck._id}`,
+        `https://flashzenserver.onrender.com/api/decks/${deck._id}`,
         { title, description },
         { headers: { Authorization: `Bearer ${token}` } }
       );

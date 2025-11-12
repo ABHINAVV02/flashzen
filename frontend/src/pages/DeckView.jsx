@@ -25,13 +25,13 @@ export default function DeckView() {
         const token = localStorage.getItem('token');
 
         // Fetch deck details
-        const deckRes = await axios.get(`http://localhost:5000/api/decks/${deckId}`, {
+        const deckRes = await axios.get(`https://flashzenserver.onrender.com/api/decks/${deckId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDeck(deckRes.data);
 
         // Fetch flashcards
-        const flashcardsRes = await axios.get(`http://localhost:5000/api/flashcards/${deckId}`, {
+        const flashcardsRes = await axios.get(`https://flashzenserver.onrender.com/api/flashcards/${deckId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFlashcards(flashcardsRes.data);

@@ -16,7 +16,7 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post('https://flashzenserver.onrender.com/api/auth/login', {
         email,
         password,
       });

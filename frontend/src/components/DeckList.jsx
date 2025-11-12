@@ -28,7 +28,7 @@ export default function DeckList({ decks, onSelectDeck, setDecks }) {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/decks/${selectedDeck._id}`, {
+      await axios.delete(`https://flashzenserver.onrender.com/api/decks/${selectedDeck._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDecks(decks.filter(deck => deck._id !== selectedDeck._id));
@@ -46,7 +46,7 @@ export default function DeckList({ decks, onSelectDeck, setDecks }) {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.patch(
-        `http://localhost:5000/api/decks/${selectedDeck._id}/favourite`,
+        `https://flashzenserver.onrender.com/api/decks/${selectedDeck._id}/favourite`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

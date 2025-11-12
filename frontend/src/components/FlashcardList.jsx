@@ -16,7 +16,7 @@ export default function FlashcardList({ flashcards, setFlashcards }) {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/flashcards/${id}`, {
+      await axios.delete(`https://flashzenserver.onrender.com/api/flashcards/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFlashcards(flashcards.filter(card => card._id !== id));
@@ -36,7 +36,7 @@ export default function FlashcardList({ flashcards, setFlashcards }) {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.put(
-        `http://localhost:5000/api/flashcards/${editingId}`,
+        `https://flashzenserver.onrender.com/api/flashcards/${editingId}`,
         {
           question: editQuestion,
           answer: editAnswer,

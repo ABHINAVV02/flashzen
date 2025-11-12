@@ -14,7 +14,7 @@ export default function ConfirmDelete() {
   useEffect(() => {
     const confirmDeletion = async () => {
       try {
-        await axios.delete(`http://localhost:5000/api/auth/confirm-delete/${token}`);
+        await axios.delete(`https://flashzenserver.onrender.com/api/auth/confirm-delete/${token}`);
         setStatus('success');
         setMessage('Your account has been successfully deleted.');
         // Clear local storage after successful deletion

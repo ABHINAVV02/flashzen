@@ -16,7 +16,7 @@ export default function RevisionChart() {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/revision', {
+        const res = await axios.get('https://flashzenserver.onrender.com/api/revision', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const correctCount = res.data.filter(stat => stat.correct).length;

@@ -39,7 +39,7 @@ export default function AddDeck({ onDeckAdded }) {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.post(
-        'http://localhost:5000/api/decks',
+        'https://flashzenserver.onrender.com/api/decks',
         { title, description, tags, isFavourite },
         { headers: { Authorization: `Bearer ${token}` } }
       );
