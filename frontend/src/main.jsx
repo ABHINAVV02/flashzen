@@ -1,10 +1,11 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider, useThemeContext, lightTheme, darkTheme } from './ThemeContext'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, useThemeContext, lightTheme, darkTheme } from './ThemeContext';
+import './index.css';
+import App from './App.jsx';
+import { AuthProvider } from './context/AuthContext';
 
 function AppWithTheme() {
   const { mode } = useThemeContext();
@@ -20,8 +21,10 @@ function AppWithTheme() {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider>
-      <AppWithTheme />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <AppWithTheme />
+      </ThemeProvider>
+    </AuthProvider>
   </StrictMode>,
-)
+);
