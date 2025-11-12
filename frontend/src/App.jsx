@@ -22,7 +22,7 @@ import Settings from './pages/Settings';
 import Leaderboard from './pages/Leaderboard';
 import ConfirmDelete from './pages/ConfirmDelete';
 import LogoutButton from './components/LogoutButton';
-import ThemeToggle from './components/Themetoggle';
+import ThemeToggle from './components/ThemeToggle';
 
 function Navigation() {
   const token = localStorage.getItem('token');
