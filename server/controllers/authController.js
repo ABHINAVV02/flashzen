@@ -95,7 +95,7 @@ export const updateProfile = async (req, res) => {
         return res.status(400).json({ message: 'Please provide a valid email address' });
       }
 
-      // Check if email is already taken by another user
+      // if email is already taken
       const existingUser = await User.findOne({ email, _id: { $ne: user._id } });
       if (existingUser) {
         return res.status(400).json({ message: 'Email already in use by another account' });
@@ -123,7 +123,7 @@ export const updateProfile = async (req, res) => {
 export const getLeaderboard = async (req, res) => {
   try {
     const users = await User.find({})
-      .select('name email points level streak badges createdAt')
+      .select('username email points level streak badges createdAt')
       .sort({ points: -1, level: -1, streak: -1 })
       .limit(50);
     res.json(users);
