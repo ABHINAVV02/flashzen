@@ -144,49 +144,34 @@ export const updateSettings = async (req, res) => {
   }
 };
 
-export const requestDeleteAccount = async (req, res) => {
+export const deleteAccount = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Generate delete token
-    const deleteToken = generateDeleteToken();
-    const deleteTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+    // Get all user's deck IDs first
+    const Deck = (await import('../models/Deck.js')).default;
+    const userDecks = await Deck.find({ user: user._id }).distinct('_id');
 
-    // Save token to user
-    user.deleteToken = deleteToken;
-    user.deleteTokenExpiry = deleteTokenExpiry;
-    await user.save();
-
-    // Send confirmation email
-    await sendDeleteConfirmationEmail(user.email, deleteToken);
-
-    res.json({ message: 'Account deletion confirmation email sent. Please check your email.' });
-  } catch (error) {
-    console.error('Error requesting account deletion:', error);
-    res.status(500).json({ message: 'Failed to send deletion confirmation email' });
-  }
-};
-
-export const confirmDeleteAccount = async (req, res) => {
-  const { token } = req.params;
-
-  try {
-    const user = await User.findOne({
-      deleteToken: token,
-      deleteTokenExpiry: { $gt: new Date() }
-    });
-
-    if (!user) {
-      return res.status(400).json({ message: 'Invalid or expired deletion token' });
-    }
-
-    // Delete all related data
+    // Delete all related data in proper order
     await Promise.all([
-      // Delete user's decks and flashcards (assuming cascade delete or manual cleanup)
-      // You might need to implement this based on your data relationships
+      // Delete user's revision stats (references flashcards and decks)
+      (await import('../models/RevisionStats.js')).default.deleteMany({
+        $or: [
+          { user: user._id },
+          { deck: { $in: userDecks } },
+          { flashcard: { $in: await (await import('../models/Flashcard.js')).default.find({ deck: { $in: userDecks } }).distinct('_id') } }
+        ]
+      }),
+      // Delete user's flashcards
+      (await import('../models/Flashcard.js')).default.deleteMany({ deck: { $in: userDecks } }),
+      // Delete user's decks
+      Deck.deleteMany({ user: user._id }),
+      // Delete user's activities
+      (await import('../models/Activity.js')).default.deleteMany({ user: user._id }),
+      // Delete the user
       User.findByIdAndDelete(user._id)
     ]);
 

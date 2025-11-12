@@ -97,7 +97,16 @@ export const deleteDeck = async (req, res) => {
     if (!deck) return res.status(404).json({ message: 'Deck not found' });
     if (deck.user.toString() !== req.user.id) return res.status(401).json({ message: 'Not authorized' });
 
-    await deck.remove();
+    // Delete associated flashcards first
+    const Flashcard = (await import('../models/Flashcard.js')).default;
+    await Flashcard.deleteMany({ deck: req.params.id });
+
+    // Delete associated revision stats
+    const RevisionStats = (await import('../models/RevisionStats.js')).default;
+    await RevisionStats.deleteMany({ deck: req.params.id });
+
+    // Delete the deck
+    await Deck.findByIdAndDelete(req.params.id);
 
     // Log activity
     const activity = new Activity({
@@ -110,6 +119,7 @@ export const deleteDeck = async (req, res) => {
 
     res.json({ message: 'Deck removed' });
   } catch (err) {
+    console.error('Error deleting deck:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };

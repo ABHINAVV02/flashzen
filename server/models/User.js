@@ -48,14 +48,6 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: true
     }
-  },
-  deleteToken: {
-    type: String,
-    default: null
-  },
-  deleteTokenExpiry: {
-    type: Date,
-    default: null
   }
 }, { timestamps: true });
 

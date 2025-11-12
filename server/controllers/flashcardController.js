@@ -92,7 +92,12 @@ export const deleteFlashcard = async (req, res) => {
     const deck = await Deck.findById(flashcard.deck);
     if (deck.user.toString() !== req.user.id) return res.status(401).json({ message: 'Not authorized' });
 
-    await flashcard.remove();
+    // Delete associated revision stats first
+    const RevisionStats = (await import('../models/RevisionStats.js')).default;
+    await RevisionStats.deleteMany({ flashcard: req.params.id });
+
+    // Delete the flashcard
+    await Flashcard.findByIdAndDelete(req.params.id);
 
     // Log activity
     const activity = new Activity({
@@ -105,6 +110,7 @@ export const deleteFlashcard = async (req, res) => {
 
     res.json({ message: 'Flashcard removed' });
   } catch (err) {
+    console.error('Error deleting flashcard:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
