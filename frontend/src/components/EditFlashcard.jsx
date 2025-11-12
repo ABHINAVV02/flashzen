@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { TextField, Button, Box, Alert } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -14,8 +14,8 @@ export default function EditFlashcard({ flashcard, onUpdate, onCancel }) {
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.put(
-        `https://flashzenserver.onrender.com/api/flashcards/${flashcard._id}`,
+      const res = await api.put(
+        `/flashcards/${flashcard._id}`,
         { question, answer },
         { headers: { Authorization: `Bearer ${token}` } }
       );

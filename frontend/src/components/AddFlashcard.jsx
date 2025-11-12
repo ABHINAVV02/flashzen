@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { TextField, Button, Box, Chip, Typography } from '@mui/material';
 
 export default function AddFlashcard({ deckId, onFlashcardAdded }) {
@@ -18,8 +18,8 @@ export default function AddFlashcard({ deckId, onFlashcardAdded }) {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post(
-        'https://flashzenserver.onrender.com/api/flashcards',
+      const res = await api.post(
+        '/flashcards',
         {
           deck: deckId,
           question: question.trim(),

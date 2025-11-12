@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { List, ListItem, ListItemText, ListItemButton, IconButton, Typography, Paper, Box, Chip, Menu, MenuItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -28,7 +28,7 @@ export default function DeckList({ decks, onSelectDeck, setDecks }) {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`https://flashzenserver.onrender.com/api/decks/${selectedDeck._id}`, {
+      await api.delete(`/decks/${selectedDeck._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDecks(decks.filter(deck => deck._id !== selectedDeck._id));
@@ -45,8 +45,8 @@ export default function DeckList({ decks, onSelectDeck, setDecks }) {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.patch(
-        `https://flashzenserver.onrender.com/api/decks/${selectedDeck._id}/favourite`,
+      const res = await api.patch(
+        `/decks/${selectedDeck._id}/favourite`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

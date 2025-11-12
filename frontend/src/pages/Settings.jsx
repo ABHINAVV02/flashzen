@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import {
   Typography,
   Box,
@@ -27,7 +27,7 @@ export default function Settings() {
     const fetchSettings = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/profile', {
+        const res = await api.get('/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSettings(res.data.settings || settings);
@@ -43,8 +43,8 @@ export default function Settings() {
     setSuccess('');
     try {
       const token = localStorage.getItem('token');
-      await axios.put(
-        'https://flashzenserver.onrender.com/api/auth/settings',
+      await api.put(
+        '/auth/settings',
         { settings },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { TextField, Button, Paper, Typography, Alert, Box, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { AuthContext } from '../context/AuthContext';
 
 export default function Login() {
@@ -18,7 +18,7 @@ export default function Login() {
     setError('');
     setIsLoading(true);
     try {
-      const response = await axios.post('https://flashzenserver.onrender.com/api/auth/login', { email, password });
+      const response = await api.post('/auth/login', { email, password });
       login(response.data.token); // update auth state
       navigate('/library'); // redirect after login
     } catch (error) {

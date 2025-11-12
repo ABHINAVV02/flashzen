@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Typography, List, ListItem, ListItemText, Paper, Box, Divider, Grid, Card, CardContent, Avatar, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions, LinearProgress, Chip, Stack, Alert, DialogContentText } from '@mui/material';
 import HistoryIcon from '@mui/icons-material/History';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
@@ -33,7 +33,7 @@ export default function Profile() {
     const fetchUserProfile = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/profile', {
+        const res = await api.get('/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
@@ -55,7 +55,7 @@ export default function Profile() {
     const fetchActivities = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/activity', {
+        const res = await api.get('/activity', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setActivities(res.data);
@@ -71,7 +71,7 @@ export default function Profile() {
   const handleEditSubmit = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.put('https://flashzenserver.onrender.com/api/auth/profile', editForm, {
+      const res = await api.put('/auth/profile', editForm, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data);
@@ -87,14 +87,18 @@ export default function Profile() {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post('https://flashzenserver.onrender.com/api/auth/delete-account', {}, {
+      const res = await api.delete('/auth/delete-account', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDeleteMessage(res.data.message);
-      setShowDeleteDialog(false);
+      // Clear local storage and redirect after successful deletion
+      localStorage.removeItem('token');
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     } catch (err) {
-      console.error('Failed to request account deletion:', err);
-      setDeleteMessage('Failed to send deletion confirmation email. Please try again.');
+      console.error('Failed to delete account:', err);
+      setDeleteMessage('Failed to delete account. Please try again.');
     } finally {
       setDeleteLoading(false);
     }
@@ -424,7 +428,7 @@ export default function Profile() {
             <li>All activity logs and achievements</li>
           </Box>
           <Alert severity="warning" sx={{ mb: 2 }}>
-            A confirmation email will be sent to your registered email address. You must click the link in the email to complete the deletion.
+            This action is immediate and cannot be undone. Your account will be permanently deleted.
           </Alert>
           {deleteMessage && (
             <Alert severity={deleteMessage.includes('Failed') ? 'error' : 'success'} sx={{ mt: 2 }}>
@@ -441,7 +445,7 @@ export default function Profile() {
             disabled={deleteLoading}
             startIcon={deleteLoading ? null : <DeleteForeverIcon />}
           >
-            {deleteLoading ? 'Sending...' : 'Send Confirmation Email'}
+            {deleteLoading ? 'Deleting...' : 'Delete Account'}
           </Button>
         </DialogActions>
       </Dialog>

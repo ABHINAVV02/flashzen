@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { List, ListItem, ListItemText, IconButton, Typography, Box, Chip, TextField, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -16,7 +16,7 @@ export default function FlashcardList({ flashcards, setFlashcards }) {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`https://flashzenserver.onrender.com/api/flashcards/${id}`, {
+      await api.delete(`/flashcards/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFlashcards(flashcards.filter(card => card._id !== id));
@@ -35,8 +35,8 @@ export default function FlashcardList({ flashcards, setFlashcards }) {
   const handleSaveEdit = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.put(
-        `https://flashzenserver.onrender.com/api/flashcards/${editingId}`,
+      const res = await api.put(
+        `/flashcards/${editingId}`,
         {
           question: editQuestion,
           answer: editAnswer,

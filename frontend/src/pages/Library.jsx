@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { Typography, Grid, Paper, Box, Button, Dialog, DialogTitle, DialogContent, Card, CardContent, CardActions, Chip, TextField, InputAdornment, Tabs, Tab, Menu, MenuItem, IconButton, Switch, FormControlLabel } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -43,8 +43,8 @@ export default function Library() {
       const token = localStorage.getItem('token');
 
       const [decksRes, flashcardsRes] = await Promise.all([
-        axios.get('https://flashzenserver.onrender.com/api/decks', { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get('https://flashzenserver.onrender.com/api/flashcards/user', { headers: { Authorization: `Bearer ${token}` } })
+        api.get('/decks', { headers: { Authorization: `Bearer ${token}` } }),
+        api.get('/flashcards/user', { headers: { Authorization: `Bearer ${token}` } })
       ]);
 
       setDecks(decksRes.data);
@@ -90,7 +90,7 @@ export default function Library() {
   const handleDeleteDeck = async (deckId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`https://flashzenserver.onrender.com/api/decks/${deckId}`, {
+      await api.delete(`/decks/${deckId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setDecks(prev => prev.filter(d => d._id !== deckId));
@@ -102,7 +102,7 @@ export default function Library() {
   const handleToggleFavourite = async (deckId) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.patch(`https://flashzenserver.onrender.com/api/decks/${deckId}/favourite`, {}, {
+      const res = await api.patch(`/decks/${deckId}/favourite`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setDecks(prev => prev.map(d => d._id === res.data._id ? res.data : d));
@@ -124,7 +124,7 @@ export default function Library() {
   const handleDeleteFlashcard = async (cardId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`https://flashzenserver.onrender.com/api/flashcards/${cardId}`, {
+      await api.delete(`/flashcards/${cardId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFlashcards(prev => prev.filter(c => c._id !== cardId));

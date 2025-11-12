@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { TextField, Button, Box, Typography, Chip } from '@mui/material';
 
 export default function AddDeck({ onDeckAdded }) {
@@ -38,8 +38,8 @@ export default function AddDeck({ onDeckAdded }) {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post(
-        'https://flashzenserver.onrender.com/api/decks',
+      const res = await api.post(
+        '/decks',
         { title, description, tags, isFavourite },
         { headers: { Authorization: `Bearer ${token}` } }
       );

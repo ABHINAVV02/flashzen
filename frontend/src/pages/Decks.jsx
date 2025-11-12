@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { Typography, Grid, Paper, Box, Button, Dialog, DialogTitle, DialogContent, Card, CardContent, CardActions } from '@mui/material';
 import AddDeck from '../components/AddDeck';
 import EditDeck from '../components/EditDeck';
@@ -16,7 +16,7 @@ export default function Decks() {
     const fetchDecks = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/decks', {
+        const res = await api.get('/decks', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDecks(res.data);

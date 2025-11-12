@@ -14,7 +14,7 @@ import Profile from './components/Profile';
 import RevisionStats from './pages/RevisionStats';
 import Settings from './pages/Settings';
 import Leaderboard from './pages/Leaderboard';
-import ConfirmDelete from './pages/ConfirmDelete';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -79,7 +79,7 @@ const router = createBrowserRouter(
           </PrivateRoute>
         }
       />
-      <Route path="confirm-delete/:token" element={<ConfirmDelete />} />
+
       <Route path="*" element={<Navigate to="/" />} />
     </Route>
   )

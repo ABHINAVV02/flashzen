@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { Typography, Grid, Paper, Box, Button, Dialog, DialogTitle, DialogContent, Alert, Chip } from '@mui/material';
 import AddFlashcard from '../components/AddFlashcard';
 import FlashcardList from '../components/FlashcardList';
@@ -25,13 +25,13 @@ export default function DeckView() {
         const token = localStorage.getItem('token');
 
         // Fetch deck details
-        const deckRes = await axios.get(`https://flashzenserver.onrender.com/api/decks/${deckId}`, {
+        const deckRes = await api.get(`/decks/${deckId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDeck(deckRes.data);
 
         // Fetch flashcards
-        const flashcardsRes = await axios.get(`https://flashzenserver.onrender.com/api/flashcards/${deckId}`, {
+        const flashcardsRes = await api.get(`/flashcards/${deckId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFlashcards(flashcardsRes.data);

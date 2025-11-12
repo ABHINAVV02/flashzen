@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Typography, Paper, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Avatar, Chip } from '@mui/material';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
@@ -13,7 +13,7 @@ export default function Leaderboard() {
     const fetchLeaderboard = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/leaderboard', {
+        const res = await api.get('/auth/leaderboard', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setLeaderboard(res.data);

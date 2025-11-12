@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Typography, Box, Button, FormControl, InputLabel, Select, MenuItem, Paper, Alert } from '@mui/material';
 import Revision from '../components/Revision';
 
@@ -13,7 +13,7 @@ export default function RevisionPage() {
     const fetchDecks = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/decks', {
+        const res = await api.get('/decks', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDecks(res.data);
@@ -33,8 +33,8 @@ export default function RevisionPage() {
     const fetchFlashcards = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(
-          `https://flashzenserver.onrender.com/api/flashcards/${selectedDeck}`,
+        const res = await api.get(
+          `/flashcards/${selectedDeck}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

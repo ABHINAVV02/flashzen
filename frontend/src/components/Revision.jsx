@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { Box, Typography, Button, Paper } from '@mui/material';
 
 export default function Revision({ flashcards }) {
@@ -62,7 +62,7 @@ export default function Revision({ flashcards }) {
     const fetchTimerSetting = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/profile', {
+        const res = await api.get('/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const timerDuration = res.data.settings?.timerDuration || 30;
@@ -122,7 +122,7 @@ export default function Revision({ flashcards }) {
     const fetchTimerSetting = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/auth/profile', {
+        const res = await api.get('/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTimer(res.data.settings?.timerDuration || 30);
@@ -136,8 +136,8 @@ export default function Revision({ flashcards }) {
   const recordReview = async (correct) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(
-        'https://flashzenserver.onrender.com/api/revision',
+      await api.post(
+        '/revision',
         {
           flashcardId: currentCard._id,
           deckId: currentCard.deck,

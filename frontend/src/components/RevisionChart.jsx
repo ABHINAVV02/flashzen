@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts';
 import { Typography, Box, useTheme } from '@mui/material';
 
@@ -16,7 +16,7 @@ export default function RevisionChart() {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/revision', {
+        const res = await api.get('/revision', {
           headers: { Authorization: `Bearer ${token}` },
         });
         const correctCount = res.data.filter(stat => stat.correct).length;

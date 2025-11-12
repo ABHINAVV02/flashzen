@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Typography, Paper, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import RevisionChart from '../components/RevisionChart';
@@ -11,7 +11,7 @@ export default function RevisionStats() {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://flashzenserver.onrender.com/api/revision', {
+        const res = await api.get('/revision', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setStats(res.data);
