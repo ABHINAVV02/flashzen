@@ -123,7 +123,7 @@ export const updateProfile = async (req, res) => {
 export const getLeaderboard = async (req, res) => {
   try {
     const users = await User.find({})
-      .select('name email points level streak badges createdAt')
+      .select('username email points level streak badges createdAt')
       .sort({ points: -1, level: -1, streak: -1 })
       .limit(50);
     res.json(users);
@@ -183,10 +183,9 @@ export const confirmDeleteAccount = async (req, res) => {
       return res.status(400).json({ message: 'Invalid or expired deletion token' });
     }
 
-    // Delete all related data
+    
     await Promise.all([
-      // Delete user's decks and flashcards (assuming cascade delete or manual cleanup)
-      // You might need to implement this based on your data relationships
+    
       User.findByIdAndDelete(user._id)
     ]);
 
