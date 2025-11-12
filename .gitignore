@@ -1,0 +1,10 @@
+# Dependency directories
+node_modules/
+client/node_modules/
+server/node_modules/
+# Build output directories
+client/build/
+server/logs/
+# Environment variables
+.env
+.DS_Store
