@@ -79,7 +79,7 @@ export default function Leaderboard() {
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Avatar sx={{ mr: 2, bgcolor: 'primary.main' }}>
-                          {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                          {user.username ? user.username.charAt(0).toUpperCase() : 'A'}
                         </Avatar>
                         <Box>
                           <Typography variant="subtitle2" fontWeight="bold">
