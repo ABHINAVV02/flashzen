@@ -83,10 +83,7 @@ export default function Leaderboard() {
                         </Avatar>
                         <Box>
                           <Typography variant="subtitle2" fontWeight="bold">
-                            {user.name || 'Anonymous'}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {user.email}
+                            {user.username || 'Anonymous'}
                           </Typography>
                         </Box>
                       </Box>

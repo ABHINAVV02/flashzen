@@ -1,5 +1,6 @@
-import { Typography, Box, Button, Grid, Paper, Card, CardContent } from '@mui/material';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Typography, Box, Button, Grid, Paper, Card, CardContent } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -9,9 +10,14 @@ export default function Home() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
+  useEffect(() => {
+    if (token) {
+      navigate('/profile');
+    }
+  }, [token, navigate]);
+
   if (token) {
-    navigate('/profile');
-    return null;
+    return null; // or a loader/spinner if you prefer
   }
 
   const features = [
