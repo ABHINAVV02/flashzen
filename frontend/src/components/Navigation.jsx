@@ -54,7 +54,7 @@ export default function Navigation() {
           </Box>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4, minHeight: 'calc(100vh - 140px)' }}>
+      <Container maxWidth={false} sx={{ mt: { xs: 2, sm: 4 }, mb: { xs: 2, sm: 4 }, px: { xs: 2, sm: 3 }, minHeight: 'calc(100vh - 140px)' }}>
         <Outlet />
       </Container>
       <Box component="footer" sx={{ bgcolor: 'background.paper', p: 2, mt: 'auto' }}>
